@@ -1,6 +1,6 @@
-# Coffeesource.net
+# Steemlogs.Info
 
-[Coffeesource.net](Coffeesource.net) is an open source project built using Python to develop tools using the Steem blockchain.
+[Steemlogs.Info](Steemlogs.Info) is an open source project built using Python to develop tools using the Steem blockchain.
 
 ## Architecture
 
@@ -32,4 +32,4 @@ Run the following command to run the project:
 
     docker-compose up
 
-Now you can visit the coffeesource.net site locally navigating to *localhost:8000* in your browser.
+Now you can visit the Steemlogs.Info site locally navigating to *localhost:8000* in your browser.
