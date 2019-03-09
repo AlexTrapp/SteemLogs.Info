@@ -2,10 +2,10 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-SECRET_KEY = 'this_is_super_secret'
+SECRET_KEY = '5ymxdeav8DyBQvy73SKTxoxBayntuJg5hSZkoPeFY8SuWmwCYD'
 
-DEBUG = True
-ALLOWED_HOSTS = []
+DEBUG = False
+ALLOWED_HOSTS = ['134.209.71.175', 'steemlogs.info']
 
 PROJECT_APPS = (
     'app',
@@ -68,8 +68,6 @@ STEEM_NODES = [
     'https://steemd.privex.io',
     'https://gtg.steem.house:8090',
     'https://steemd.minnowsupportproject.org',
-    'https://steemd.privex.io',
-    'https://steemd.steemit.com',
     'https://rpc.steemliberator.com',
     ]
 

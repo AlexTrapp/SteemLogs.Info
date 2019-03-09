@@ -6,3 +6,6 @@ steem==0.18.103
 # Apps
 django-extensions==1.7.4
 django-widget-tweaks==1.4.1
+
+# Production webserver
+gunicorn==19.9.0 

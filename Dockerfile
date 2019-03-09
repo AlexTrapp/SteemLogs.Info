@@ -1,15 +1,15 @@
-FROM python:3.6.0
+# This is a copy of Python 3.6's onbuild script (python:3.6-onbuild)
+# https://raw.githubusercontent.com/docker-library/python/7eca63adca38729424a9bab957f006f5caad870f/3.6/onbuild/Dockerfile
+# Cannot use 3.6-onbuild directly due to pip compatibility issues with steem-python.
+FROM python:3.6
 
-RUN wget http://rubies.travis-ci.org/ubuntu/14.04/x86_64/ruby-2.3.1.tar.bz2 \
-    && tar xvjf ruby-2.3.1.tar.bz2 \
-    && cp -rp ruby-2.3.1/* /usr/local/ \
-    && rm -rf ruby-2.3.1.tar.bz2 ruby-2.3.1/
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-RUN mkdir /code
-WORKDIR /code
+COPY requirements.txt /usr/src/app/
+# Downgrade pip due to compatibility issues with steem-python
+RUN pip install pip==9.0.3 && pip install --no-cache-dir -r requirements.txt
 
-RUN easy_install -U pip
-RUN pip install -U pip setuptools
+COPY . /usr/src/app
 
-ADD requirements.txt /code/requirements.txt
-RUN pip install -r requirements.txt
+
