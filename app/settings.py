@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '5ymxdeav8DyBQvy73SKTxoxBayntuJg5hSZkoPeFY8SuWmwCYD'
 
 DEBUG = False
-ALLOWED_HOSTS = ['134.209.71.175', 'steemlogs.info']
+ALLOWED_HOSTS = ['134.209.71.175', 'steemlogs.info', 'localhost']
 
 PROJECT_APPS = (
     'app',
