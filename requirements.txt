@@ -9,3 +9,4 @@ django-widget-tweaks==1.4.1
 
 # Production webserver
 gunicorn==19.9.0 
+beem==0.20.9

@@ -1,50 +1,51 @@
 import json
 
-from steem import Steem
+#from steem import Steem
 from app import settings
+
+from beem import Steem
+from beem.account import Account
+from beem.comment import Comment
 
 
 def get_user_posts(username, from_id, limit=60):
-    s = Steem(nodes=settings.STEEM_NODES)
+    stm = Steem(node='https://rpc.usesteem.com/')
+    acc = Account(username, steem_instance=stm)
 
-    blog_entries = s.get_blog(
-        account=username,
-        entry_id=from_id,
-        limit=limit,
+    blog_entries = acc.get_blog_entries(
+        from_id,
+        limit
     )
 
     entries_list = []
 
     for entry in blog_entries:
-        comment = entry['comment']
-
         # Could be util to load posts on utopian directly.
         # parent_permlink = comment.get('permlink')
-        author = comment.get('author')
 
-        if username == author:
-            metadata = json.loads(comment.get('json_metadata'))
-            category = comment.get('category')
-            metadata = json.loads(comment.get('json_metadata'))
+        if username == entry['author']:
+            comment = Comment("@" + entry['author'] + "/" + entry['permlink'])
             entry_dict = {
-                'id': comment.get('id'),
-                'title': comment.get('title'),
+                'id': comment.id,
+                'title': comment.title,
                 'clickable': 'https://www.steemit.com/{0}/@{1}/{2}'.format(
-                    category,
-                    author,
-                    comment.get('permlink'),
+                    comment.category,
+                    comment.author,
+                    comment.permlink,
                 ),
                 'url': '/{0}/@{1}/{2}'.format(
-                    category,
-                    author,
-                    comment.get('permlink'),
+                    comment.category,
+                    comment.author,
+                    comment.permlink,
                 ),
-                'author': author,
-                'category': category,
-                'tags': metadata.get('tags'),
-                'images': metadata.get('image'),
+                'author': comment.author,
+                'category': comment.category,
+                'tags': comment.json_metadata['tags'],
                 'entry_id': entry['entry_id']
             }
+
+            if 'images' in comment.json_metadata:
+                entry_dict['images'] = comment.json_metadata['images']
 
             entries_list.append(entry_dict)
 
