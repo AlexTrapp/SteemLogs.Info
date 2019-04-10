@@ -20,9 +20,6 @@ def get_user_posts(username, from_id, limit=100):
     entries_list = []
 
     for entry in blog_entries:
-        # Could be util to load posts on utopian directly.
-        # parent_permlink = comment.get('permlink')
-
         if username == entry['author']:
             comment = Comment("@" + entry['author'] + "/" + entry['permlink'])
             entry_dict = {
