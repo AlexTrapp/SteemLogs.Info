@@ -11,13 +11,17 @@
 <div>
     {% include 'accounts/entries/_backlink_filter.html' %}
 
-    <table class="CSEntriesList table table-bordered" data-ax-load-account-posts-url="{% url 'accounts:ax_load_account_posts' %}?username={{ account_dict.username }}">
+    <table class="CSEntriesList table table-bordered" data-ax-load-account-posts-url="{% url 'accounts:ax_load_account_posts' %}?username={{ account_dict.username }}" data-ax-load-all-account-posts-url="{% url 'accounts:ax_load_all_account_posts' %}?username={{ account_dict.username }}">
 
     {% include 'accounts/entries/_entry_list.html' %}
     </table>
 
     <div class="text-center">
-        <a href="#" class="CSLoadPostsButtom btn btn-info enabledLoad">Load more posts</a>
+        <p href="#" class="CSLoadPostsButton btn btn-info enabledLoad">Load more posts</p>
+    </div>
+
+    <div class="text-center">
+        <p href="#" class="CSLoadAllPostsButton btn btn-info enabledLoad">Load all</p>
     </div>
 
     <div class="CSAccountLoadPostsSpinner text-center" style="display:none;">
@@ -28,5 +32,6 @@
 
 {% block js %}
 <script src="{% static 'js/accounts/load_posts.js' %}"></script>
+<script src="{% static 'js/accounts/load_all_posts.js' %}"></script>
 <script src="{% static 'js/accounts/posts_filter_form.js' %}"></script>
 {% endblock %}

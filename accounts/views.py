@@ -113,6 +113,37 @@ class AjaxLoadAccountPostsView(View):
             }
         )
 
+# add an ajax load all posts view
+class AjaxLoadAllAccountPostsView(View):
+    def get(self, request, *args, **kwargs):
+        username = request.GET.get('username')
+        last_entry_id = request.GET.get('last_entry_id')
+        next_entry_id = int(last_entry_id) - 1
+        # get the parameters from the request
+
+        # create an array
+        entries_list = []
+        # loop until all posts loaded and append to array
+        while next_entry_id > 0:
+            entries_list.extend(get_user_posts(
+            username=username,
+            from_id=next_entry_id))
+            next_entry_id = next_entry_id - 100
+
+        # return array of all posts
+        return JsonResponse(
+            {
+                'action': 'load',
+                'content': render_to_string(
+                    'accounts/entries/_entry_list.html',
+                    context={
+                        'entries_list': entries_list,
+                    },
+                    request=self.request,
+                )
+            }
+        )
+
 
 class ImagesBacklinkView(TemplateView):
     template_name = 'accounts/images_backlink.html'

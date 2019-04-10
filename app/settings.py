@@ -4,7 +4,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY = '5ymxdeav8DyBQvy73SKTxoxBayntuJg5hSZkoPeFY8SuWmwCYD'
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['134.209.71.175', 'steemlogs.info', 'localhost']
 
 PROJECT_APPS = (
@@ -60,8 +60,9 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# had to change static root to fix the static dev problem, guess they're just the same
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = '/static/'
 
 STEEM_NODES = [
     'https://api.steemit.com',

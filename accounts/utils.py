@@ -8,7 +8,7 @@ from beem.account import Account
 from beem.comment import Comment
 
 
-def get_user_posts(username, from_id, limit=60):
+def get_user_posts(username, from_id, limit=100):
     stm = Steem(node='https://rpc.usesteem.com/')
     acc = Account(username, steem_instance=stm)
 
@@ -46,7 +46,6 @@ def get_user_posts(username, from_id, limit=60):
 
             if 'images' in comment.json_metadata:
                 entry_dict['images'] = comment.json_metadata['images']
-
             entries_list.append(entry_dict)
 
     return entries_list

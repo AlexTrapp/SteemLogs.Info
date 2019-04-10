@@ -10,11 +10,14 @@ function LoadPosts(){
       success:function(response){
           if (response.action === 'load') {
               $('.CSEntriesList').append(response.content);
-          } else {
-            $('.CSLoadPostsButtom').hide();
+          } else if (response.action === 'pause') {
+            // changed to appropriate classname (button)
+            // added hide load all button if load is done
+            $('.CSLoadPostsButton').hide();
+            $('.CSLoadAllPostsButton').hide();
           }
           $('.CSAccountLoadPostsSpinner').hide();
-          $('.CSLoadPostsButtom').addClass('enabledLoad');
+          $('.CSLoadPostsButton').addClass('enabledLoad');
 
           // Check applied tags to filter
           var tags_list = []
@@ -53,13 +56,13 @@ function LoadPosts(){
 $(function () {
     'use strict'; 
 
-    $('.CSLoadPostsButtom').on('click', function () {
+    $('.CSLoadPostsButton').on('click', function () {
         if ($(this).hasClass('enabledLoad')) {
           $('.CSAccountLoadPostsSpinner').show();
           $(this).removeClass('enabledLoad');
           LoadPosts();
         }
 
-        return false;
+        return;
     });
 });

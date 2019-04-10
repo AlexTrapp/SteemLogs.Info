@@ -2,12 +2,14 @@ from django.conf.urls import url
 
 from .views import UsernameSearchFormView
 from .views import AjaxLoadAccountPostsView
+from .views import AjaxLoadAllAccountPostsView
 from .views import ImagesBacklinkView
 from .views import ImagesBacklinkViewDetail
 from .views import AjaxLoadPostsImagesView
 from .views import PepperView
 from .views import TrainingGrounds
 
+# urls here are for loading all of the different python views
 urlpatterns = [
     url(
         r'^username_search_form/',
@@ -19,6 +21,12 @@ urlpatterns = [
         r'^ax_load_account_posts/',
         AjaxLoadAccountPostsView.as_view(),
         name='ax_load_account_posts',
+    ),
+
+    url(
+        r'^ax_load_all_account_posts/',
+        AjaxLoadAllAccountPostsView.as_view(),
+        name='ax_load_all_account_posts',
     ),
 
     url(
