@@ -9,7 +9,7 @@ from beem.comment import Comment
 
 
 def get_user_posts(username, from_id, limit=100):
-    stm = Steem(node='https://rpc.usesteem.com/')
+    stm = Steem()
     acc = Account(username, steem_instance=stm)
 
     blog_entries = acc.get_blog_entries(
