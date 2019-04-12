@@ -124,11 +124,15 @@ class AjaxLoadAllAccountPostsView(View):
         # create an array
         entries_list = []
         # loop until all posts loaded and append to array
-        while next_entry_id > 0:
+        while next_entry_id >= 0:
+            limit = next_entry_id + 1
+            if limit > 1000:
+                limit = 1000
             entries_list.extend(get_user_posts(
             username=username,
-            from_id=next_entry_id))
-            next_entry_id = next_entry_id - 100
+            from_id=next_entry_id,
+            limit=limit))
+            next_entry_id = next_entry_id - limit
 
         # return array of all posts
         return JsonResponse(
