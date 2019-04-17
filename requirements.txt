@@ -2,6 +2,7 @@ Django==1.11.7
 
 # Libs
 steem==0.18.103
+beem==0.20.20
 
 # Apps
 django-extensions==1.7.4
@@ -9,4 +10,3 @@ django-widget-tweaks==1.4.1
 
 # Production webserver
 gunicorn==19.9.0 
-beem==0.20.9

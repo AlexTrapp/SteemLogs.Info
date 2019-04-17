@@ -8,8 +8,8 @@ from beem.account import Account
 from beem.comment import Comment
 
 
-def get_user_posts(username, from_id, limit=60):
-    stm = Steem(node='https://rpc.usesteem.com/')
+def get_user_posts(username, from_id, limit=100):
+    stm = Steem()
     acc = Account(username, steem_instance=stm)
 
     blog_entries = acc.get_blog_entries(
@@ -20,9 +20,6 @@ def get_user_posts(username, from_id, limit=60):
     entries_list = []
 
     for entry in blog_entries:
-        # Could be util to load posts on utopian directly.
-        # parent_permlink = comment.get('permlink')
-
         if username == entry['author']:
             comment = Comment("@" + entry['author'] + "/" + entry['permlink'])
             entry_dict = {
@@ -46,7 +43,6 @@ def get_user_posts(username, from_id, limit=60):
 
             if 'images' in comment.json_metadata:
                 entry_dict['images'] = comment.json_metadata['images']
-
             entries_list.append(entry_dict)
 
     return entries_list
