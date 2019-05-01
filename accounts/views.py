@@ -12,10 +12,9 @@ from django.template.loader import render_to_string
 from .data import SELFIE_CONTEST_PLAYERS
 from .data import PAPAPEPPER_CONTEST_ENTRIES
 from .utils import get_user_posts
+from .utils import get_user_history
+from .utils import get_user_vops
 from app import settings
-
-
-
 
 class UsernameSearchFormView(View):
     def post(self, request, **kwargs):
@@ -134,6 +133,40 @@ class AjaxLoadAllAccountPostsView(View):
             limit=limit))
             next_entry_id = next_entry_id - limit
 
+        # return array of all posts
+        return JsonResponse(
+            {
+                'action': 'load',
+                'content': render_to_string(
+                    'accounts/entries/_entry_list.html',
+                    context={
+                        'entries_list': entries_list,
+                    },
+                    request=self.request,
+                )
+            }
+        )
+
+class AjaxLoadAccountHistoryView(View):
+    def get(self, request, *args, **kwargs):
+        username = request.GET.get('username')
+        next_entry_id = get_user_vops(username) 
+
+        # create an array
+        entries_list = []
+        # loop until all posts loaded and append to array
+        while next_entry_id > 0:
+            stop = next_entry_id - 2500
+            if stop < 0:
+                stop = 0
+            entries_list.extend(get_user_history(
+                username=username,
+                start=next_entry_id,
+                stop=stop))
+            next_entry_id = stop
+            print(entries_list[len(entries_list) - 1])
+
+        print(entries_list);
         # return array of all posts
         return JsonResponse(
             {

@@ -1,28 +1,27 @@
-function LoadPosts() {
-  var last_loaded_id = $(".CSEntriesList tr:last").data("entry-id");
-  var load_account_posts_url =
-    $(".CSEntriesList").data("ax-load-account-posts-url") +
-    "&last_entry_id=" +
-    last_loaded_id;
+function LoadAllHistory() {
+  var load_account_history_url = $(".CSEntriesList").data(
+    "ax-load-account-history-url"
+  );
 
   $.ajax({
-    url: load_account_posts_url,
+    url: load_account_history_url,
     type: "GET",
     processData: false,
     contentType: false,
     timeout: 0,
     success: function(response) {
-      console.log(response);
-      if (response.action === "load") {
-        $(".CSEntriesList").append(response.content);
-      } else if (response.action === "pause") {
-        // changed to appropriate classname (button)
-        // added hide load all button if load is done
-        $(".CSLoadPostsButton").hide();
-        $(".CSLoadAllPostsButton").hide();
+      if (response.action !== "load") {
+        $(".CSLoadPostsButton").show();
+        $(".CSLoadPostsButton").addClass("enabledLoad");
+        $(".CSLoadAllPostsButton").show();
+        $(".CSLoadAllPostsButton").addClass("enabledLoad");
+        $(".CSLoadHistoryButton").show();
+        return;
       }
+
+      $(".CSEntriesList").empty();
+      $(".CSEntriesList").append(response.content);
       $(".CSAccountLoadPostsSpinner").hide();
-      $(".CSLoadPostsButton").addClass("enabledLoad");
 
       // Check applied tags to filter
       var tags_list = [];
@@ -65,12 +64,12 @@ function LoadPosts() {
 $(function() {
   "use strict";
 
-  $(".CSLoadPostsButton").on("click", function() {
-    if ($(this).hasClass("enabledLoad")) {
-      $(".CSAccountLoadPostsSpinner").show();
-      $(this).removeClass("enabledLoad");
-      LoadPosts();
-    }
+  $(".CSLoadHistoryButton").on("click", function() {
+    $(this).hide();
+    $(".CSLoadPostsButton").hide();
+    $(".CSLoadAllPostsButton").hide();
+    $(".CSAccountLoadPostsSpinner").show();
+    LoadAllHistory();
 
     return;
   });
