@@ -1,37 +1,48 @@
-{% extends "layout/index.html" %}
-{% load static %}
-
-{% block title %}@{{ account_dict.username }}{% endblock title %}
-
-{% block jumbotron %}
-{% include 'accounts/entries/_user_header.html' %}
-{% endblock %}
-
+{% extends "layout/index.html" %} 
+{% load static %} 
+{% block title %}@{{ account_dict.username }}
+{% endblock title %} 
+{% block jumbotron %} 
+{% include 'accounts/entries/_user_header.html' %} 
+{% endblock %} 
 {% block content %}
 <div>
-    {% include 'accounts/entries/_backlink_filter.html' %}
+  {% include 'accounts/entries/_backlink_filter.html' %}
 
-    <table class="CSEntriesList table table-bordered" data-ax-load-account-posts-url="{% url 'accounts:ax_load_account_posts' %}?username={{ account_dict.username }}" data-ax-load-all-account-posts-url="{% url 'accounts:ax_load_all_account_posts' %}?username={{ account_dict.username }}">
-
+  <table
+    class="CSEntriesList table table-bordered"
+    data-ax-load-account-posts-url="{% url 'accounts:ax_load_account_posts' %}?username={{account_dict.username}}"
+    data-ax-load-all-account-posts-url="{% url 'accounts:ax_load_all_account_posts' %}?username={{account_dict.username}}"
+    data-ax-load-account-history-url="{% url 'accounts:ax_load_account_history' %}?username={{account_dict.username}}"
+  >
     {% include 'accounts/entries/_entry_list.html' %}
-    </table>
+  </table>
 
-    <div class="text-center">
-        <p href="#" class="CSLoadPostsButton btn btn-info enabledLoad">Load more posts</p>
-    </div>
+  <div class="text-center">
+    <p href="#" class="CSLoadPostsButton btn btn-info enabledLoad">
+      Load more posts
+    </p>
+  </div>
 
-    <div class="text-center">
-        <p href="#" class="CSLoadAllPostsButton btn btn-info enabledLoad">Load all</p>
-    </div>
+  <div class="text-center">
+    <p href="#" class="CSLoadAllPostsButton btn btn-info enabledLoad">
+      Load all (limited by RPC node)
+    </p>
+  </div>
 
-    <div class="CSAccountLoadPostsSpinner text-center" style="display:none;">
-        <i class="fa fa-spinner fa-pulse fa-fw fa-2x" aria-hidden="true"></i>
-    </div>
+  <div class="text-center">
+    <p href="#" class="CSLoadHistoryButton btn btn-info enabledLoad">
+      Load all history
+    </p>
+  </div>
+
+  <div class="CSAccountLoadPostsSpinner text-center" style="display:none;">
+    <i class="fa fa-spinner fa-pulse fa-fw fa-2x" aria-hidden="true"></i>
+  </div>
 </div>
-{% endblock content %}
-
-{% block js %}
+{% endblock content %} {% block js %}
 <script src="{% static 'js/accounts/load_posts.js' %}"></script>
 <script src="{% static 'js/accounts/load_all_posts.js' %}"></script>
+<script src="{% static 'js/accounts/load_all_history.js' %}"></script>
 <script src="{% static 'js/accounts/posts_filter_form.js' %}"></script>
 {% endblock %}

@@ -3,6 +3,7 @@ from django.conf.urls import url
 from .views import UsernameSearchFormView
 from .views import AjaxLoadAccountPostsView
 from .views import AjaxLoadAllAccountPostsView
+from .views import AjaxLoadAccountHistoryView
 from .views import ImagesBacklinkView
 from .views import ImagesBacklinkViewDetail
 from .views import AjaxLoadPostsImagesView
@@ -27,6 +28,12 @@ urlpatterns = [
         r'^ax_load_all_account_posts/',
         AjaxLoadAllAccountPostsView.as_view(),
         name='ax_load_all_account_posts',
+    ),
+
+    url(
+        r'^ax_load_account_history/',
+        AjaxLoadAccountHistoryView.as_view(),
+        name='ax_load_account_history',
     ),
 
     url(
